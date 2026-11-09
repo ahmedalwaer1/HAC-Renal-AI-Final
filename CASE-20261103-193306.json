@@ -1,0 +1,86 @@
+{
+  "case_id": "CASE-20261103-193306",
+  "label": "",
+  "opened_at": "2026-11-03T19:33:06",
+  "updated_at": "2026-11-03T19:33:06",
+  "patient": {
+    "age_years": 86
+  },
+  "drug": null,
+  "baseline_result": {
+    "decision": "NEEDS_MORE_INFORMATION",
+    "missing_fields": [
+      "requested_drug"
+    ],
+    "dose_calculation_allowed": false,
+    "message": "No drug was requested; no regimen was generated.",
+    "required_action": "Specify one of: Meropenem, Vancomycin.",
+    "supported_drugs": [
+      "Meropenem",
+      "Vancomycin"
+    ],
+    "clinical_review_required": true
+  },
+  "current_result": {
+    "decision": "NEEDS_MORE_INFORMATION",
+    "missing_fields": [
+      "requested_drug"
+    ],
+    "dose_calculation_allowed": false,
+    "message": "No drug was requested; no regimen was generated.",
+    "required_action": "Specify one of: Meropenem, Vancomycin.",
+    "supported_drugs": [
+      "Meropenem",
+      "Vancomycin"
+    ],
+    "clinical_review_required": true
+  },
+  "timeline": [
+    {
+      "at": "2026-11-03T19:33:06",
+      "event": "baseline",
+      "note": "Initial regimen",
+      "decision": "NEEDS_MORE_INFORMATION",
+      "regimen": {
+        "decision": "NEEDS_MORE_INFORMATION"
+      },
+      "result": {
+        "decision": "NEEDS_MORE_INFORMATION",
+        "missing_fields": [
+          "requested_drug"
+        ],
+        "dose_calculation_allowed": false,
+        "message": "No drug was requested; no regimen was generated.",
+        "required_action": "Specify one of: Meropenem, Vancomycin.",
+        "supported_drugs": [
+          "Meropenem",
+          "Vancomycin"
+        ],
+        "clinical_review_required": true
+      },
+      "reassessment": null
+    }
+  ],
+  "next_due": [
+    {
+      "item": "Serum creatinine and CrCl",
+      "due": "Every 48 hours, or sooner if renal function is unstable",
+      "source": "HAC_RENAL_PROTOCOL"
+    },
+    {
+      "item": "Clinical response review (fever, haemodynamics, source control)",
+      "due": "Every 24 hours",
+      "source": "HAC_RENAL_PROTOCOL"
+    },
+    {
+      "item": "Antibiotic time-out (indication, dose, duration, stop date)",
+      "due": "At 48-72 hours",
+      "source": "HAC_RENAL_PROTOCOL"
+    },
+    {
+      "item": "Culture and susceptibility review",
+      "due": "As soon as results are available",
+      "source": "HAC_RENAL_PROTOCOL"
+    }
+  ]
+}

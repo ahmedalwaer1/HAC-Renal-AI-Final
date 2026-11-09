@@ -1,0 +1,149 @@
+{
+  "project": "HAC-Renal AI",
+  "drug_under_test": "Meropenem",
+  "test_data_type": "Synthetic",
+  "population": "Adults",
+  "source_basis": {
+    "renal_dosing_source": "UCSF Infectious Diseases Management Program - Meropenem",
+    "source_url": "https://idmp.ucsf.edu/content/meropenem",
+    "source_note": "Dose rows below are transcribed from the UCSF screenshots supplied by the user. Confirm the live guideline and local protocol before clinical deployment.",
+    "safety_source": "Official Meropenem prescribing information / DailyMed",
+    "safety_source_url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=ca5f501c-6520-4d09-aae2-4f5db74d468f"
+  },
+  "test_cases": [
+    {
+      "test_id": "MERO-TC-01",
+      "test_name": "Confirmed Meropenem / Beta-lactam Hypersensitivity",
+      "test_purpose": "Verify contraindication and allergy safety validation.",
+      "patient_input": {
+        "age_years": 46,
+        "requested_drug": "Meropenem",
+        "allergy_history": [
+          {
+            "substance": "Meropenem",
+            "reaction": "Anaphylaxis",
+            "certainty": "Confirmed"
+          }
+        ],
+        "crcl_ml_min": 72,
+        "dialysis": {
+          "status": "No"
+        }
+      },
+      "expected_output": {
+        "decision": "BLOCK",
+        "alert_code": "CONFIRMED_HYPERSENSITIVITY",
+        "dose_calculation_allowed": false,
+        "message": "Do not administer meropenem in a patient with confirmed serious hypersensitivity to the product.",
+        "required_action": "Stop automated recommendation and request an alternative antimicrobial / clinician review."
+      }
+    },
+    {
+      "test_id": "MERO-TC-02",
+      "test_name": "Meropenem with Valproate",
+      "test_purpose": "Verify detection of a clinically important drug interaction.",
+      "patient_input": {
+        "age_years": 39,
+        "requested_drug": "Meropenem",
+        "concomitant_medications": [
+          {
+            "drug": "Valproate",
+            "indication": "Epilepsy"
+          }
+        ],
+        "crcl_ml_min": 64,
+        "dialysis": {
+          "status": "No"
+        }
+      },
+      "expected_output": {
+        "decision": "HIGH_PRIORITY_INTERACTION_ALERT",
+        "alert_code": "MEROPENEM_VALPROATE",
+        "dose_calculation_allowed": true,
+        "message": "Meropenem may markedly reduce valproate concentrations and cause breakthrough seizures.",
+        "required_action": "Prefer an alternative antibiotic when clinically appropriate; if concomitant use is unavoidable, urgent specialist review and seizure-control plan are required."
+      }
+    },
+    {
+      "test_id": "MERO-TC-03",
+      "test_name": "Renal Dose Adjustment - CrCl 18 mL/min",
+      "test_purpose": "Verify selection of the renal-adjusted standard short-infusion regimen.",
+      "patient_input": {
+        "age_years": 67,
+        "requested_drug": "Meropenem",
+        "indication_group": "Standard",
+        "infusion_strategy": "Short_Infusion",
+        "crcl_ml_min": 18,
+        "dialysis": {
+          "status": "No"
+        }
+      },
+      "expected_output": {
+        "decision": "RENAL_ADJUSTED_REGIMEN_SELECTED",
+        "dose": 500,
+        "dose_unit": "mg",
+        "route": "IV",
+        "frequency": "Every 12 hours",
+        "infusion_strategy": "Short_Infusion",
+        "source_rule": "UCSF adult short-infusion renal dosing table: CrCl 10-25 mL/min, standard indication",
+        "clinical_review_required": true
+      }
+    },
+    {
+      "test_id": "MERO-TC-04",
+      "test_name": "Intermittent Hemodialysis Regimen - Standard Indication",
+      "test_purpose": "Verify that the system selects the IHD-specific row and preserves source wording.",
+      "patient_input": {
+        "age_years": 59,
+        "requested_drug": "Meropenem",
+        "indication_group": "Standard",
+        "dialysis": {
+          "status": "Yes",
+          "modality": "IHD",
+          "schedule_available": true
+        }
+      },
+      "expected_output": {
+        "decision": "DIALYSIS_SPECIFIC_REGIMEN_SELECTED",
+        "dose": 500,
+        "dose_unit": "mg",
+        "route": "IV",
+        "initial_instruction": "One dose now",
+        "maintenance_frequency_source_text": "qPM",
+        "do_not_reinterpret_qPM": true,
+        "clinical_review_required": true,
+        "message": "Use the IHD-specific source row. Preserve qPM exactly until its timing is clarified by the local protocol."
+      }
+    },
+    {
+      "test_id": "MERO-TC-05",
+      "test_name": "CVVHD Flow Rate Above 2 L/hour",
+      "test_purpose": "Verify high-priority specialist review for a CRRT-related parameter outside routine assumptions.",
+      "patient_input": {
+        "age_years": 63,
+        "requested_drug": "Meropenem",
+        "indication_group": "Standard",
+        "dialysis": {
+          "status": "Yes",
+          "modality_documented_in_source": "CVHD",
+          "modality_reported_by_clinician": "CVVHD",
+          "flow_rate_l_per_hour": 2.5
+        }
+      },
+      "expected_output": {
+        "decision": "SPECIALIST_REVIEW_REQUIRED",
+        "alert_code": "CVVHD_FLOW_ABOVE_2_L_H",
+        "automatic_dose_finalization_allowed": false,
+        "message": "The supplied UCSF guidance advises discussion with ID/ASP pharmacy when CVVHD flow rate exceeds 2 L/hour.",
+        "required_action": "Refer to ID / antimicrobial stewardship / clinical pharmacy for individualized regimen confirmation.",
+        "terminology_caution": "The supplied table is labeled CVHD while its footnote refers to CVVHD; do not generalize this regimen to all CRRT modalities."
+      }
+    }
+  ],
+  "execution_instructions": {
+    "run_each_case_individually": true,
+    "compare_actual_output_with_expected_output": true,
+    "pass_criteria": "The system returns the expected decision and required safety behavior without inventing missing clinical details.",
+    "important": "These are synthetic software-validation cases, not real patient prescriptions or proof of clinical validity."
+  }
+}

@@ -1,0 +1,75 @@
+Original path -> Flat filename -> Status
+.env.example | .env.example | included
+.gitignore | .gitignore | included
+App.jsx | App.jsx | included
+CASE-20261103-193306.json | CASE-20261103-193306.json | included
+Procfile | Procfile | included
+RUN_ME.md | RUN_ME.md | included
+START_HAC.bat | START_HAC.bat | included
+START_HERE.md | START_HERE.md | included
+__init__.py | __init__.py | included
+api_bridge.py | api_bridge.py | included
+app.py | app.py | included
+baseline_comparison.py | baseline_comparison.py | included
+config.toml | config.toml | included
+demo_script.md | demo_script.md | included
+evaluation.py | evaluation.py | included
+evidence_retriever.py | evidence_retriever.py | included
+extract_data.py | extract_data.py | included
+followup_engine.py | followup_engine.py | included
+index.html | index.html | included
+install_deps.py | install_deps.py | included
+install_pkgs.py | install_pkgs.py | included
+legacy_app.py | legacy_app.py | included
+listing.txt | listing.txt | included
+main.jsx | main.jsx | included
+orchestrator.py | orchestrator.py | included
+package-lock.json | package-lock.json | included
+package.json | package.json | included
+railway.json | railway.json | included
+requirements-api.txt | requirements-api.txt | included
+requirements.txt | requirements.txt | included
+rules_engine.py | rules_engine.py | included
+style.css | style.css | included
+test_runner.py | test_runner.py | included
+vite.config.js | vite.config.js | included
+.streamlit/config.toml | config.toml | same-content duplicate omitted
+agents/__init__.py | agents____init__.py | included
+agents/ai_tools.py | ai_tools.py | included
+agents/llm_agent.py | llm_agent.py | included
+cases/CASE-20261103-193306.json | CASE-20261103-193306.json | same-content duplicate omitted
+data/clinical_data.py | clinical_data.py | included
+data/clinical_vocabulary.py | clinical_vocabulary.py | included
+data/drug_bounds.py | drug_bounds.py | included
+data/drug_registry.py | drug_registry.py | included
+data/followup_rules.py | followup_rules.py | included
+data/synthetic_cases.json | synthetic_cases.json | included
+data/vancomycin_synthetic_cases.json | vancomycin_synthetic_cases.json | included
+frontend/START_HAC.bat | START_HAC.bat | same-content duplicate omitted
+frontend/index.html | index.html | same-content duplicate omitted
+frontend/package-lock.json | package-lock.json | same-content duplicate omitted
+frontend/package.json | package.json | same-content duplicate omitted
+frontend/vite.config.js | vite.config.js | same-content duplicate omitted
+knowledge_base/meropenem_rules.md | meropenem_rules.md | included
+knowledge_base/meropenem_tdm.md | meropenem_tdm.md | included
+knowledge_base/vancomycin_rules.md | vancomycin_rules.md | included
+scripts/__init__.py | __init__.py | same-content duplicate omitted
+scripts/baseline_comparison.py | baseline_comparison.py | same-content duplicate omitted
+scripts/extract_data.py | extract_data.py | same-content duplicate omitted
+src/App.jsx | App.jsx | same-content duplicate omitted
+src/main.jsx | main.jsx | same-content duplicate omitted
+src/style.css | style.css | same-content duplicate omitted
+tests/__init__.py | __init__.py | same-content duplicate omitted
+tests/test_ai_agent.py | test_ai_agent.py | included
+tests/test_evaluation.py | test_evaluation.py | included
+tests/test_followup.py | test_followup.py | included
+tests/test_scenario_handling.py | test_scenario_handling.py | included
+tests/verify_ai_agent.py | verify_ai_agent.py | included
+tests/verify_rules.py | verify_rules.py | included
+tools/__init__.py | __init__.py | same-content duplicate omitted
+tools/crcl_calculator.py | crcl_calculator.py | included
+tools/meropenem_dosing.py | meropenem_dosing.py | included
+tools/vancomycin_dosing.py | vancomycin_dosing.py | included
+frontend/src/App.jsx | App.jsx | same-content duplicate omitted
+frontend/src/main.jsx | main.jsx | same-content duplicate omitted
+frontend/src/style.css | style.css | same-content duplicate omitted

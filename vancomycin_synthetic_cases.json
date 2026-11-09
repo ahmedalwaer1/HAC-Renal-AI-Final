@@ -1,0 +1,95 @@
+{
+  "project": "HAC-Renal AI",
+  "drug_under_test": "Vancomycin",
+  "test_data_type": "Synthetic",
+  "population": "Adults",
+  "source_basis": {
+    "renal_dosing_source": "UCSF Infectious Diseases Management Program - Vancomycin Initial Dosing Nomogram",
+    "source_url": "https://idmp.ucsf.edu/content/vancomycin-initial-dosing-nomogram",
+    "source_note": "Dose rows below are transcribed from the UCSF vancomycin nomogram. Confirm the live guideline and local protocol before clinical deployment.",
+    "safety_source": "Official Vancomycin prescribing information",
+    "safety_source_url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=vancomycin"
+  },
+  "test_cases": [
+    {
+      "test_id": "VAN-TC-01",
+      "test_name": "Normal Renal Function - Complicated Infection",
+      "test_purpose": "Verify standard vancomycin dosing for normal renal function with complicated infection.",
+      "patient_input": {
+        "age_years": 45,
+        "weight_kg": 70,
+        "requested_drug": "Vancomycin",
+        "crcl_ml_min": 95,
+        "infection_type": "complicated",
+        "dialysis": {
+          "status": "No"
+        }
+      },
+      "expected_output": {
+        "decision": "RENAL_ADJUSTED_REGIMEN_SELECTED",
+        "rule_id": "VAN-002",
+        "dose": 1000,
+        "dose_unit": "mg",
+        "route": "IV",
+        "frequency": "q8h",
+        "dose_type": "Maintenance",
+        "crcl_band": ">90",
+        "weight_band": "60-80 kg",
+        "clinical_review_required": true
+      }
+    },
+    {
+      "test_id": "VAN-TC-02",
+      "test_name": "Hemodialysis Patient",
+      "test_purpose": "Verify vancomycin dosing for hemodialysis patient (loading dose then post-HD).",
+      "patient_input": {
+        "age_years": 62,
+        "weight_kg": 80,
+        "requested_drug": "Vancomycin",
+        "infection_type": "complicated",
+        "dialysis": {
+          "status": "Yes",
+          "modality": "IHD"
+        }
+      },
+      "expected_output": {
+        "decision": "DIALYSIS_SPECIFIC_REGIMEN_SELECTED",
+        "rule_id": "VAN-020",
+        "dose_mg_per_kg": "20-25",
+        "route": "IV",
+        "frequency": "Once, then 500 mg post-HD only",
+        "dose_type": "Loading then post-HD maintenance",
+        "dialysis_modality": "Intermittent Hemodialysis",
+        "clinical_review_required": true
+      }
+    },
+    {
+      "test_id": "VAN-TC-03",
+      "test_name": "Missing Creatinine/CrCl - Safe Failure",
+      "test_purpose": "Verify appropriate abstention when critical renal function data is missing.",
+      "patient_input": {
+        "age_years": 55,
+        "weight_kg": 70,
+        "requested_drug": "Vancomycin",
+        "infection_type": "complicated",
+        "dialysis": {
+          "status": "No"
+        }
+      },
+      "expected_output": {
+        "decision": "BLOCK",
+        "alert_code": "MISSING_CRCL",
+        "dose_calculation_allowed": false,
+        "message": "CrCl is required for renal dose selection.",
+        "required_action": "Provide CrCl (mL/min) or creatinine+gender+weight+age.",
+        "clinical_review_required": true
+      }
+    }
+  ],
+  "execution_instructions": {
+    "run_each_case_individually": true,
+    "compare_actual_output_with_expected_output": true,
+    "pass_criteria": "The system returns the expected decision and required safety behavior without inventing missing clinical details.",
+    "important": "These are synthetic software-validation cases, not real patient prescriptions or proof of clinical validity."
+  }
+}
