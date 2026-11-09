@@ -20,8 +20,7 @@ if ROOT not in sys.path:
 PARENT = os.path.dirname(ROOT)
 if PARENT not in sys.path:
     sys.path.insert(0, PARENT)
-
-from tools.crcl_calculator import calculate_crcl  # noqa: F401  (kept for callers)
+from crcl_calculator import calculate_crcl
 from data.clinical_data import (
     DRUG_HYPERSENSITIVITY,
     DRUG_INTERACTION_COVERAGE,
